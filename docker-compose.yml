@@ -1,0 +1,58 @@
+version: '3.5'
+
+services:
+  reign-app-client:
+    container_name: reign-app-client
+    depends_on:
+      - reign-app-api
+    build: app-client/
+    restart: always
+    ports:
+      - '${CLIENT_EXPOSED_PORT}:80'
+    env_file: .env
+    # environment:
+    #   WAIT_HOSTS: 'budget_db:3306, biddings_db:27017'
+    networks:
+      - reign-app-network
+
+  reign-app-api:
+    container_name: reign-app-api
+    depends_on:
+      - reign-articles-db
+    build: app-server/
+    restart: always
+    ports:
+      - '${API_EXPOSED_PORT}:3000'
+    env_file: .env
+    environment:
+      WAIT_HOSTS: 'reign-articles-db:27017'
+      DB_HOST: reign-articles-db
+      DB_PORT: 27017
+      DB_USER: admin
+      DB_PASS: ${MONGO_PASS}
+      DB: admin
+    networks:
+      - reign-app-network
+
+  reign-articles-db:
+    image: mongo
+    container_name: articles-db
+    restart: unless-stopped
+    ports:
+      - '${MONGO_EXPOSED_PORT}:27017'
+    env_file: .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - reign-articles-data:/data/db
+    networks:
+      - reign-app-network
+
+volumes:
+  reign-articles-data:
+
+networks:
+  reign-app-network:
+    driver: bridge
