@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
 import axios, { AxiosResponse } from 'axios';
 import { ArticlesService } from 'src/articles/articles.service';
+import { ApiResponse } from './dto';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const axiosRetry = require('axios-retry');
-import { ApiResponse } from './dto';
 
 axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 
@@ -16,15 +16,22 @@ export class TaskService {
   @Cron(CronExpression.EVERY_HOUR)
   handleCron() {
     axios
-      .get('https://hn.algolia.com/api/v1/search_by_date?query=nodejs')
+      .get(process.env.HN_API_ENDPOINT)
       .then((response: AxiosResponse<ApiResponse, any>) => {
+        this.logger.log('Fetching Articles');
         response.data.hits.map(async (article) => {
           await this.articlesService.create(article);
         });
       })
-      .catch(function (error) {
+      .catch((error) => {
         this.logger.error('Error fetching from hacker news api');
         this.logger.error(error);
       });
+  }
+
+  @Timeout(100)
+  seedDB() {
+    this.logger.log('Populating Database');
+    this.handleCron();
   }
 }

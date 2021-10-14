@@ -5,13 +5,14 @@ services:
     container_name: reign-app-client
     depends_on:
       - reign-app-api
-    build: app-client/
+    build:
+      context: app-client/
+      args:
+        NEXT_PUBLIC_API_URL: http://127.0.0.1:${API_EXPOSED_PORT}
     restart: always
     ports:
       - '${CLIENT_EXPOSED_PORT}:80'
     env_file: .env
-    # environment:
-    #   WAIT_HOSTS: 'budget_db:3306, biddings_db:27017'
     networks:
       - reign-app-network
 
@@ -31,6 +32,7 @@ services:
       DB_USER: admin
       DB_PASS: ${MONGO_PASS}
       DB: admin
+      HN_API_ENDPOINT: 'https://hn.algolia.com/api/v1/search_by_date?query=nodejs'
     networks:
       - reign-app-network
 
