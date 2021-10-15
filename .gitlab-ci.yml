@@ -41,7 +41,7 @@ test-server:
     - cd app-server/
     - yarn install
     - yarn run lint
-    - yarn run test:cov
+    - yarn run test
     - echo "Test successfully!"
 
 docker-build:

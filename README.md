@@ -40,6 +40,12 @@ yarn install
 yarn dev
 ```
 
+To test the front-end, you must run:
+
+```bash
+yarn run test-all
+```
+
 On the server-side, you must equally create a `.env` file to load the environment variables. You must set the database connection settings.
 
 ```bash
@@ -53,6 +59,19 @@ echo "PORT=3246" >> .env
 echo "HN_API_ENDPOINT=https://hn.algolia.com/api/v1/search_by_date?query=nodejs" >> .env
 yarn install
 yarn start:dev
+```
+
+To test the back-end, you must run:
+
+```bash
+yarn run lint
+yarn run test
+```
+
+And to see tests coverage:
+
+```bash
+yarn run test:cov
 ```
 
 ## Contributing
