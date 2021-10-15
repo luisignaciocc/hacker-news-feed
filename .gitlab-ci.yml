@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - docker-compose-build
 
 build-client:
   stage: build
@@ -42,3 +43,12 @@ test-server:
     - yarn run lint
     - yarn run test:cov
     - echo "Test successfully!"
+
+docker-build:
+  stage: docker-compose-build
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
