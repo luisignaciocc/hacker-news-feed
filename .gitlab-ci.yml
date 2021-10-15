@@ -8,8 +8,8 @@ build:
   script:
     - echo "Start building App"
     - cd app-client/
-    - npm install
-    - npm build
+    - yarn install
+    - yarn run build
     - echo "Build successfully!"
 
 test:
@@ -18,6 +18,6 @@ test:
   script:
     - echo "Testing App"
     - cd app-client/
-    - npm install
-    - CI=true npm test-all
+    - yarn install
+    - yarn run test-all
     - echo "Test successfully!"
