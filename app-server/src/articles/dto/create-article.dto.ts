@@ -12,9 +12,9 @@ export class CreateArticleDto {
   story_url: string;
   parent_id: number;
   created_at_i: number;
-  _tags: string[];
+  _tags?: string[];
   objectID: string;
-  _highlightResult: {
+  _highlightResult?: {
     author: {
       value: string;
       matchLevel: string;
