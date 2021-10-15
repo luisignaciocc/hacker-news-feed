@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ArticlesService } from './articles.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Model, Query } from 'mongoose';
+import { Model } from 'mongoose';
 import { Article, ArticleDocument } from './schemas';
 import { mockArticle, articleArray, articleDocArray } from './utils';
 
