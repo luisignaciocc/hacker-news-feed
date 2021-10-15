@@ -2,22 +2,43 @@ stages:
   - build
   - test
 
-build:
+build-client:
   stage: build
   image: node
   script:
-    - echo "Start building App"
+    - echo "Start building Client"
     - cd app-client/
     - yarn install
     - yarn run build
     - echo "Build successfully!"
 
-test:
+build-server:
+  stage: build
+  image: node
+  script:
+    - echo "Start building Api"
+    - cd app-server/
+    - yarn install
+    - yarn run build
+    - echo "Build successfully!"
+
+test-client:
   stage: test
   image: node
   script:
-    - echo "Testing App"
+    - echo "Testing Client"
     - cd app-client/
     - yarn install
     - yarn run test-all
+    - echo "Test successfully!"
+
+test-server:
+  stage: test
+  image: node
+  script:
+    - echo "Testing Api"
+    - cd app-server/
+    - yarn install
+    - yarn run lint
+    - yarn run test:cov
     - echo "Test successfully!"
