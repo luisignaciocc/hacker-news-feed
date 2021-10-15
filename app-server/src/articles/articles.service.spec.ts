@@ -3,12 +3,7 @@ import { ArticlesService } from './articles.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model, Query } from 'mongoose';
 import { Article, ArticleDocument } from './schemas';
-import {
-  mockArticle,
-  mockArticleDoc,
-  articleArray,
-  articleDocArray,
-} from './utils';
+import { mockArticle, articleArray, articleDocArray } from './utils';
 
 describe('ArticlesService', () => {
   let service: ArticlesService;
