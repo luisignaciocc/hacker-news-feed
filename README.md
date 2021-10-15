@@ -1,4 +1,4 @@
-# Reign Test
+# Hacker News Feed
 
 Javascript application made with React, NextJS, Typescript, NestJS, MongoDB, and Docker. Build for listing the HackerNews feed.
 
